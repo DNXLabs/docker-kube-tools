@@ -1,5 +1,7 @@
 # docker-kubectl
 
+![Security](https://github.com/DNXLabs/docker-kubectl/workflows/Security/badge.svg)
+![Lint](https://github.com/DNXLabs/docker-kubectl/workflows/Lint/badge.svg)
 
 ## Dependencies
 - Docker
@@ -15,12 +17,6 @@ docker build -t kubectl .
 #### Run
 
 After your image has been built successfully, you can run it as a container.
-
-```bash
-docker run -it kubectl
-```
-
-#### Usage
 
 ```bash
 docker run kubectl --help
