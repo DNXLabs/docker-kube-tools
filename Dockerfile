@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ENV KUBECTL_VERSION=1.17.0
+ENV KUBECTL_VERSION=1.18.0
 ENV AWSCLI_VERSION=1.17.14
 
 VOLUME ["/work"]
@@ -36,10 +36,6 @@ RUN apk --no-cache add \
     rm -rf /var/tmp/ && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
-
-# COPY scripts /opt/scripts
-# RUN chmod 777 /opt/scripts/*
-# ENV PATH "$PATH:/opt/scripts"
 
 ENTRYPOINT [ "kubectl" ]
 
