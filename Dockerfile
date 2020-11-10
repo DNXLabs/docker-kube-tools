@@ -17,9 +17,15 @@ RUN apk --no-cache update && \
     curl=7.61.1-r3 \
     make=4.2.1-r0
 
+# Kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
+
+# Helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh && \
+    ./get_helm.sh
 
 RUN apk --no-cache add \
         python=2.7.15-r3 \
