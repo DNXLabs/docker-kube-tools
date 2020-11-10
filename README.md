@@ -1,7 +1,7 @@
-# docker-kubectl
+# docker-kube-tools
 
-![Security](https://github.com/DNXLabs/docker-kubectl/workflows/Security/badge.svg)
-![Lint](https://github.com/DNXLabs/docker-kubectl/workflows/Lint/badge.svg)
+![Security](https://github.com/DNXLabs/docker-kube-tools/workflows/Security/badge.svg)
+![Lint](https://github.com/DNXLabs/docker-kube-tools/workflows/Lint/badge.svg)
 
 ## Dependencies
 - Docker
@@ -11,7 +11,7 @@
 #### Build
 Now you are ready to build an image from this project Dockerfile.
 ```bash
-docker build -t kubectl .
+docker build -t kube-tools .
 ```
 
 #### Run
@@ -19,12 +19,14 @@ docker build -t kubectl .
 After your image has been built successfully, you can run it as a container.
 
 ```bash
-docker run kubectl --help
-docker run kubectl <command>
+docker run kube-tools --help
+docker run kube-tools <command>
 ```
 
 ## Author
-App managed by DNX Solutions.
+
+Managed by [DNX Solutions](https://github.com/DNXLabs).
 
 ## License
-Apache 2 Licensed. See LICENSE for full details.
+
+Apache 2 Licensed. See [LICENSE](https://github.com/DNXLabs/docker-kube-tools/blob/master/LICENSE) for full details.
