@@ -49,3 +49,7 @@ RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.5.3/vel
     chmod +x ./velero-v1.5.3-linux-amd64/velero && \
     mv ./velero-v1.5.3-linux-amd64/velero /usr/local/bin/velero && \
     rm -rf ./velero-v1.5.3-linux-amd64
+
+# Argo CD
+RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.2/argocd-linux-amd64 && \
+    chmod +x /usr/local/bin/argocd
