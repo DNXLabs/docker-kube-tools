@@ -53,3 +53,7 @@ RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.5.3/vel
 # Argo CD
 RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.2/argocd-linux-amd64 && \
     chmod +x /usr/local/bin/argocd
+
+# kyml
+RUN curl --silent --location -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_linux_amd64 && \
+    chmod +x /usr/local/bin/kyml
