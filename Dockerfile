@@ -1,5 +1,4 @@
-FROM alpine:3.12
-
+FROM alpine:3.13
 ENV KUBECTL_VERSION=1.18.0
 ENV AWSCLI_VERSION=1.17.14
 
@@ -9,24 +8,26 @@ WORKDIR /work
 
 RUN apk --no-cache update && \
     apk --no-cache add \
-        bash=5.0.17-r0 \
-        ca-certificates=20191127-r4 \
-        git=2.26.2-r0 \
+        bash=5.1.0-r0 \
+        ca-certificates=20191127-r5 \
+        git=2.30.0-r0 \
         openssl=1.1.1i-r0 \
         unzip=6.0-r8 \
-        curl=7.69.1-r3 \
+        zip=3.0-r9 \
+        curl=7.74.0-r0 \
         make=4.3-r0 \
-        tar=1.32-r1 \
-        python3=3.8.5-r0 \
-        py-pip=20.1.1-r0 \
-        py-setuptools=47.0.0-r0 \
+        tar=1.33-r1 \
+        python3=3.8.7-r0 \
+        py3-pip=20.3.4-r0 \
+        py3-setuptools=51.3.3-r0 \
         groff=1.22.4-r1 \
-        less=551-r0 \
+        less=563-r0 \
         jq=1.6-r1 \
-        gettext-dev=0.20.2-r0 \
-        g++=9.3.0-r2 \
-        zip=3.0-r8 && \
-    python3 -m pip install --upgrade pip==20.3.3 && \
+        gettext-dev=0.20.2-r2 \
+        g++=10.2.1_pre1-r3 \
+        libc6-compat=1.2.2-r0 \
+        libstdc++=10.2.1_pre1-r3 && \
+    python3 -m pip install --upgrade pip==21 && \
     python3 -m pip --no-cache-dir install awscli==$AWSCLI_VERSION && \
     update-ca-certificates && \
     rm -rf /var/tmp/ && \
@@ -55,5 +56,5 @@ RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argopro
     chmod +x /usr/local/bin/argocd
 
 # kyml
-RUN curl --silent --location -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_linux_amd64 && \
+RUN curl -sfL -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_linux_amd64 && \
     chmod +x /usr/local/bin/kyml
