@@ -1,6 +1,10 @@
 FROM alpine:3.13
+
 ENV KUBECTL_VERSION=1.18.0
-ENV AWSCLI_VERSION=1.17.14
+ENV AWSCLI_VERSION=1.19.73
+ENV HELM_VERSION=3.5.4
+ENV VELERO_VERSION=1.6.0
+ENV ARGOCD_VERSION=2.0.1
 
 VOLUME ["/work"]
 
@@ -8,26 +12,27 @@ WORKDIR /work
 
 RUN apk --no-cache update && \
     apk --no-cache add \
-        bash=5.1.0-r0 \
-        ca-certificates=20191127-r5 \
-        git=2.30.0-r0 \
-        openssl=1.1.1i-r0 \
-        unzip=6.0-r8 \
-        zip=3.0-r9 \
-        curl=7.74.0-r0 \
-        make=4.3-r0 \
-        tar=1.33-r1 \
-        python3=3.8.7-r0 \
-        py3-pip=20.3.4-r0 \
-        py3-setuptools=51.3.3-r0 \
-        groff=1.22.4-r1 \
-        less=563-r0 \
-        jq=1.6-r1 \
-        gettext-dev=0.20.2-r2 \
-        g++=10.2.1_pre1-r3 \
-        libc6-compat=1.2.2-r0 \
-        libstdc++=10.2.1_pre1-r3 && \
-    python3 -m pip install --upgrade pip==21 && \
+        bash \
+        ca-certificates \
+        git \
+        openssl \
+        unzip \
+        gzip \
+        zip \
+        curl \
+        make \
+        tar \
+        python3 \
+        py3-pip \
+        py3-setuptools \
+        groff \
+        less \
+        jq \
+        gettext-dev \
+        g++ \
+        libc6-compat \
+        libstdc++ && \
+    python3 -m pip --no-cache-dir install --upgrade pip==21.1.1 && \
     python3 -m pip --no-cache-dir install awscli==$AWSCLI_VERSION && \
     update-ca-certificates && \
     rm -rf /var/tmp/ && \
@@ -40,19 +45,21 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECT
     mv ./kubectl /usr/local/bin/kubectl
 
 # Helm
-RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
-    chmod 700 get_helm.sh && \
-    ./get_helm.sh
+RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz  && \
+    tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
+    chmod +x linux-amd64/helm && \
+    mv linux-amd64/helm /usr/local/bin/helm && \
+    rm -rf linux-amd64 && rm -rf helm-v${HELM_VERSION}-linux-amd64.tar.gz
 
 # Velero
-RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.5.3/velero-v1.5.3-linux-amd64.tar.gz && \
-    tar -xvzf velero-v1.5.3-linux-amd64.tar.gz && \
-    chmod +x ./velero-v1.5.3-linux-amd64/velero && \
-    mv ./velero-v1.5.3-linux-amd64/velero /usr/local/bin/velero && \
-    rm -rf ./velero-v1.5.3-linux-amd64
+RUN curl -LO https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-amd64.tar.gz && \
+    tar -xvzf velero-v${VELERO_VERSION}-linux-amd64.tar.gz && \
+    chmod +x ./velero-v${VELERO_VERSION}-linux-amd64/velero && \
+    mv ./velero-v${VELERO_VERSION}-linux-amd64/velero /usr/local/bin/velero && \
+    rm -rf ./velero-v${VELERO_VERSION}-linux-amd64 && rm -rf velero-v${VELERO_VERSION}-linux-amd64.tar.gz
 
 # Argo CD
-RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.2/argocd-linux-amd64 && \
+RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64 && \
     chmod +x /usr/local/bin/argocd
 
 # kyml
