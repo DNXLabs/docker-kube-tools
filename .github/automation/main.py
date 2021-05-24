@@ -151,7 +151,6 @@ def create_new_release(release_message):
         'Authorization': 'token %s' % GITHUB_TOKEN,
         'Accept': 'application/vnd.github.v3+json'
     }
-    print(data)
 
     response_new_release = requests.post(
         'https://api.github.com/repos/DNXLabs/docker-kube-tools/releases',
@@ -235,4 +234,4 @@ if __name__ == "__main__":
         print('Nothing to do, the upstream is in the same version or lower version.')
 
     if release_changes:
-        create_new_release(release_message[:-4])
+        create_new_release(release_message[:-2])
