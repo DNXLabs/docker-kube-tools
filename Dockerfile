@@ -1,7 +1,6 @@
 FROM alpine:3.13
 
 ENV KUBECTL_VERSION=1.18.0
-ENV AWSCLI_VERSION=1.19.73
 ENV HELM_VERSION=3.5.4
 ENV VELERO_VERSION=1.6.0
 ENV ARGOCD_VERSION=2.0.1
@@ -32,8 +31,8 @@ RUN apk --no-cache update && \
         g++ \
         libc6-compat \
         libstdc++ && \
-    python3 -m pip --no-cache-dir install --upgrade pip==21.1.1 && \
-    python3 -m pip --no-cache-dir install awscli==$AWSCLI_VERSION && \
+    python3 -m pip --no-cache-dir install --upgrade pip && \
+    python3 -m pip --no-cache-dir install --upgrade awscli && \
     update-ca-certificates && \
     rm -rf /var/tmp/ && \
     rm -rf /tmp/* && \
