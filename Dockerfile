@@ -32,7 +32,7 @@ RUN apk --no-cache update && \
         libc6-compat \
         libstdc++ && \
     python3 -m pip --no-cache-dir install --upgrade pip && \
-    python3 -m pip --no-cache-dir install --upgrade awscli && \
+    python3 -m pip --no-cache-dir install --upgrade awscli yamllint yq && \
     update-ca-certificates && \
     rm -rf /var/tmp/ && \
     rm -rf /tmp/* && \
