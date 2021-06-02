@@ -4,6 +4,7 @@ ENV KUBECTL_VERSION={{ tag_kubectl }}
 ENV HELM_VERSION={{ tag_helm }}
 ENV VELERO_VERSION={{ tag_velero }}
 ENV ARGOCD_VERSION={{ tag_argocd }}
+ENV OCTANT_VERSION={{ octant_argocd }}
 
 VOLUME ["/work"]
 
@@ -64,3 +65,10 @@ RUN curl --silent --location -o /usr/local/bin/argocd https://github.com/argopro
 # kyml
 RUN curl -sfL -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_linux_amd64 && \
     chmod +x /usr/local/bin/kyml
+
+# octant
+RUN curl -LO https://github.com/vmware-tanzu/octant/releases/download/v${OCTANT_VERSION}/octant_${OCTANT_VERSION}_Linux-64bit.tar.gz && \
+    tar -xvzf octant_${OCTANT_VERSION}_Linux-64bit.tar.gz && \
+    chmod +x ./octant_${OCTANT_VERSION}_Linux-64bit/octant && \
+    mv ./octant_${OCTANT_VERSION}_Linux-64bit/octant /usr/local/bin/octant && \
+    rm -rf ./octant_${OCTANT_VERSION}_Linux-64bit/octant && rm -rf octant_${OCTANT_VERSION}_Linux-64bit.tar.gz
