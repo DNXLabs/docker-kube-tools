@@ -12,6 +12,7 @@ LATEST_RELEASE_PATH_KUBECLT = 'https://dl.k8s.io/release/stable.txt'
 LATEST_RELEASE_PATH_HELM = 'https://api.github.com/repos/helm/helm/releases/latest'
 LATEST_RELEASE_PATH_VELERO = 'https://api.github.com/repos/vmware-tanzu/velero/releases/latest'
 LATEST_RELEASE_PATH_ARGOCD = 'https://api.github.com/repos/argoproj/argo-cd/releases/latest'
+LATEST_RELEASE_PATH_OCTANT = 'https://api.github.com/repos/vmware-tanzu/octant/releases/latest'
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 GITHUB_REPOSITORY_ID = '242928140'
 release_changes = False
@@ -78,6 +79,15 @@ def get_argocd_latest_version():
 
     release_argocd_json_obj = json.loads(response_releases_argocd.text)
     return release_argocd_json_obj.get('tag_name').replace('v', '')
+
+def get_octant_latest_version():
+    response_releases_octant = requests.get(
+        LATEST_RELEASE_PATH_OCTANT,
+        headers=auth_headers
+    )
+
+    release_octant_json_obj = json.loads(response_releases_octant.text)
+    return release_octant_json_obj.get('tag_name').replace('v', '')
 
 
 def render_template(tag_kubectl=None, tag_helm=None, tag_velero=None, tag_argocd=None):
@@ -227,6 +237,23 @@ if __name__ == "__main__":
         control['argocd_version'] = argocd_latest
         update_control(control)
         commit_message = 'Bump Argo CD version to v%s' % argocd_latest
+        add_commit_push(commit_message)
+        release_changes = True
+        release_message += "- %s.\r\n" % commit_message
+    else:
+        print('Nothing to do, the upstream is in the same version or lower version.')
+
+    # Octant
+    octant_latest = get_octant_latest_version()
+    print('Octant upstream version: %s' % octant_latest)
+    print('DNX Octant version: %s\n' % control['octant_version'])
+
+    if semver.compare(octant_latest, control['octant_version']) == 1:
+        print('Rendering template for Octant.')
+        render_template(tag_octant=octant_latest)
+        control['octant_version'] = octant_latest
+        update_control(control)
+        commit_message = 'Bump Octant version to v%s' % octant_latest
         add_commit_push(commit_message)
         release_changes = True
         release_message += "- %s.\r\n" % commit_message
