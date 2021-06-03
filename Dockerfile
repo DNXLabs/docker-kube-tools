@@ -10,6 +10,10 @@ VOLUME ["/work"]
 
 WORKDIR /work
 
+COPY scripts /opt/scripts
+
+ENV PATH "$PATH:/opt/scripts"
+
 RUN apk --no-cache update && \
     apk --no-cache add \
         bash \
