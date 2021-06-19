@@ -90,7 +90,7 @@ def get_octant_latest_version():
     return release_octant_json_obj.get('tag_name').replace('v', '')
 
 
-def render_template(tag_kubectl=None, tag_helm=None, tag_velero=None, tag_argocd=None):
+def render_template(tag_kubectl=None, tag_helm=None, tag_velero=None, tag_argocd=None, tag_octant=None):
     # Generate Dockerfile template with new upstream version
     root = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(root, 'templates')
@@ -103,7 +103,8 @@ def render_template(tag_kubectl=None, tag_helm=None, tag_velero=None, tag_argocd
             tag_kubectl = tag_kubectl or control['kubectl_version'],
             tag_helm = tag_helm or control['helm_version'],
             tag_velero = tag_velero or control['velero_version'],
-            tag_argocd = tag_argocd or control['argocd_version']
+            tag_argocd = tag_argocd or control['argocd_version'],
+            tag_octant = tag_octant or control['octant_version']
         ))
 
 
