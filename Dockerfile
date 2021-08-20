@@ -1,6 +1,6 @@
 FROM alpine:3.13
 
-ENV KUBECTL_VERSION=1.22.0
+ENV KUBECTL_VERSION=1.22.1
 ENV HELM_VERSION=3.6.3
 ENV VELERO_VERSION=1.6.3
 ENV ARGOCD_VERSION=2.0.5
@@ -16,28 +16,28 @@ ENV PATH "$PATH:/opt/scripts"
 
 RUN apk --no-cache update && \
     apk --no-cache add \
-    bash \
-    ca-certificates \
-    git \
-    openssl \
-    unzip \
-    gzip \
-    zip \
-    curl \
-    make \
-    tar \
-    python3 \
-    py3-pip \
-    py3-setuptools \
-    groff \
-    less \
-    jq \
-    gettext-dev \
-    g++ \
-    libc6-compat \
-    libstdc++ && \
+        bash \
+        ca-certificates \
+        git \
+        openssl \
+        unzip \
+        gzip \
+        zip \
+        curl \
+        make \
+        tar \
+        python3 \
+        py3-pip \
+        py3-setuptools \
+        groff \
+        less \
+        jq \
+        gettext-dev \
+        g++ \
+        libc6-compat \
+        libstdc++ && \
     python3 -m pip --no-cache-dir install --upgrade pip && \
-    python3 -m pip --no-cache-dir install --upgrade awscli yq && \
+    python3 -m pip --no-cache-dir install --upgrade awscli && \
     update-ca-certificates && \
     rm -rf /var/tmp/ && \
     rm -rf /tmp/* && \
@@ -76,7 +76,3 @@ RUN curl -LO https://github.com/vmware-tanzu/octant/releases/download/v${OCTANT_
     chmod +x ./octant_${OCTANT_VERSION}_Linux-64bit/octant && \
     mv ./octant_${OCTANT_VERSION}_Linux-64bit/octant /usr/local/bin/octant && \
     rm -rf ./octant_${OCTANT_VERSION}_Linux-64bit/octant && rm -rf octant_${OCTANT_VERSION}_Linux-64bit.tar.gz
-
-# kail
-RUN curl -sfLO https://raw.githubusercontent.com/boz/kail/master/godownloader.sh && \
-    bash godownloader.sh -b "$GOPATH/bin"
