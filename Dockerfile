@@ -11,6 +11,7 @@ VOLUME ["/work"]
 WORKDIR /work
 
 COPY scripts /opt/scripts
+COPY alias /opt/alias
 
 ENV PATH "$PATH:/opt/scripts"
 
@@ -46,7 +47,8 @@ RUN apk --no-cache update && \
 # Kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
-    mv ./kubectl /usr/local/bin/kubectl
+    mv ./kubectl /usr/local/bin/kubectl && \
+    cat /opt/alias/.kubectl_aliases >> ~/.bashrc
 
 # Helm
 RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz  && \
