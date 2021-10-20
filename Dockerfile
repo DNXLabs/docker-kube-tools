@@ -3,7 +3,7 @@ FROM alpine:3.13
 ENV KUBECTL_VERSION=1.22.2
 ENV HELM_VERSION=3.7.1
 ENV VELERO_VERSION=1.7.0
-ENV ARGOCD_VERSION=2.1.3
+ENV ARGOCD_VERSION=2.1.4
 ENV OCTANT_VERSION=0.24.0
 
 VOLUME ["/work"]
@@ -11,7 +11,6 @@ VOLUME ["/work"]
 WORKDIR /work
 
 COPY scripts /opt/scripts
-COPY alias /opt/alias
 
 ENV PATH "$PATH:/opt/scripts"
 
@@ -47,8 +46,7 @@ RUN apk --no-cache update && \
 # Kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
-    mv ./kubectl /usr/local/bin/kubectl && \
-    cat /opt/alias/.kubectl_aliases >> ~/.bashrc
+    mv ./kubectl /usr/local/bin/kubectl
 
 # Helm
 RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz  && \
