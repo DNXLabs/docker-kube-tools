@@ -12,6 +12,8 @@ WORKDIR /work
 
 COPY scripts /opt/scripts
 
+RUN chmod +x /opt/scripts/*
+
 ENV PATH "$PATH:/opt/scripts"
 
 RUN apk --no-cache update && \
