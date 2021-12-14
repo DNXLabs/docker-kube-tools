@@ -3,7 +3,7 @@ FROM alpine:3.13
 ENV KUBECTL_VERSION=1.23.0
 ENV HELM_VERSION=3.7.2
 ENV VELERO_VERSION=1.7.1
-ENV ARGOCD_VERSION=2.1.7
+ENV ARGOCD_VERSION=2.1.8
 ENV OCTANT_VERSION=0.25.0
 
 VOLUME ["/work"]
@@ -11,8 +11,6 @@ VOLUME ["/work"]
 WORKDIR /work
 
 COPY scripts /opt/scripts
-
-RUN chmod +x /opt/scripts/*
 
 ENV PATH "$PATH:/opt/scripts"
 
