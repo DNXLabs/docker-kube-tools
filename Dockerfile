@@ -6,16 +6,22 @@ ENV VELERO_VERSION=1.8.0
 ENV ARGOCD_VERSION=2.2.5
 ENV OCTANT_VERSION=0.25.0
 
+WORKDIR /root
+
+COPY scripts /opt/scripts
+
+COPY alias/.bashrc alias/.bash_profile alias/.kubectl_aliases alias/bootstrap.sh ./
+
 VOLUME ["/work"]
 
 WORKDIR /work
 
-COPY scripts /opt/scripts
-
 ENV PATH "$PATH:/opt/scripts"
 
-RUN apk --no-cache update && \
+RUN set -x && \
+    apk --no-cache update && \
     apk --no-cache add \
+        bash-completion \
         bash \
         ca-certificates \
         git \
@@ -42,6 +48,13 @@ RUN apk --no-cache update && \
     rm -rf /var/tmp/ && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
+
+
+# Install eksctl (latest version)
+RUN curl -sL "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
+    mv /tmp/eksctl /usr/bin && \
+    chmod +x /usr/bin/eksctl && \
+    rm -rf /tmp/eksctl
 
 # Kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
