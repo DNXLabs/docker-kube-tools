@@ -1,1 +1,1 @@
-{"kubectl_version": "1.26.0", "helm_version": "3.10.3", "velero_version": "1.10.0", "argocd_version": "2.5.5", "octant_version": "0.25.1"}
+{"kubectl_version": "1.26.0", "helm_version": "3.10.3", "velero_version": "1.10.0", "argocd_version": "2.5.6", "octant_version": "0.25.1"}
