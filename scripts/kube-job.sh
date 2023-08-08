@@ -22,9 +22,16 @@ function run_job {
     kubectl apply -f kube-job.yml
     echo "Kube job ===== Waiting for ${APP_NAME}-job"
     kubectl wait --for=condition=Complete job/${APP_NAME}-job -n ${KUBE_NAMESPACE}
+    STATUS=$?
     echo "Kube job ===== Logs"
     kubectl logs -f $(kubectl get pod --selector=job-name=${APP_NAME}-job -n ${KUBE_NAMESPACE} --sort-by=.metadata.creationTimestamp -o jsonpath="{.items[-1].metadata.name}") -n ${KUBE_NAMESPACE}
-    echo "Kube job ===== processed"
+    
+    if [[ $STATUS -gt 0 ]]; then 
+        echo "The job has failed"
+        exit 1
+    else
+        echo "Kube job ===== processed"
+    fi
 }
 
 run_job
