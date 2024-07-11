@@ -35,9 +35,8 @@ RUN apk --no-cache update && \
   gettext-dev \
   g++ \
   libc6-compat \
-  libstdc++ && \
-  python3 -m pip --no-cache-dir install --upgrade pip && \
-  python3 -m pip --no-cache-dir install --upgrade awscli && \
+  libstdc++ \
+  aws-cli \
   update-ca-certificates && \
   rm -rf /var/tmp/ && \
   rm -rf /tmp/* && \
