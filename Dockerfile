@@ -18,7 +18,7 @@ RUN apk --no-cache update && \
   apk --no-cache add \
   bash \
   ca-certificates \
-  git=2.30.6-r0 \
+  git \
   openssl \
   unzip \
   gzip \
