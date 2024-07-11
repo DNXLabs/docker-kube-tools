@@ -36,7 +36,7 @@ RUN apk --no-cache update && \
   g++ \
   libc6-compat \
   libstdc++ \
-  aws-cli \
+  aws-cli && \
   update-ca-certificates && \
   rm -rf /var/tmp/ && \
   rm -rf /tmp/* && \
