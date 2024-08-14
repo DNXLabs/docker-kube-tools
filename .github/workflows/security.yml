@@ -1,33 +1,29 @@
 name: Security
 
-on: [push]
+on:
+  push:
 
 jobs:
-
-  build:
-
+  scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v4
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag dnxsolutions/kube-tools:latest
-
       - name: Scan image
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v4
         id: scan
         with:
           image: dnxsolutions/kube-tools:latest
           fail-build: true
           severity-cutoff: critical
-          acs-report-enable: true
-
       - name: Inspect action SARIF report
         run: cat ${{ steps.scan.outputs.sarif }}
-
+        if: always()
       - name: Upload Anchore Scan Report
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
+
